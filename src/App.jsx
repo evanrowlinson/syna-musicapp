@@ -1,23 +1,84 @@
-import { useState } from 'react';
-import SYNAForm from './components/SYNAForm';
+import { useState, useEffect } from "react";
+import Header from "./components/Header";
+import MoodForm from "./components/MoodForm";
+import ResultsContainer from "./components/ResultsContainer";
 import './App.css';
+import SYNAForm from './components/SYNAForm';
 
-function App() {
-  const [isLoading, setIsLoading] = useState(false);
+const App = () => {
+  // ----- Mood Inputs -----
+  const [moodInputs, setMoodInputs] = useState({
+    moodText: "",
+    artists: [],
+    genres: [],
+    energy: "",
+    occasion: "",
+    discovery: 50,
+  });
 
-  const handleSubmit = (formData) => {
-    console.log('Form submitted:', formData);
-    setIsLoading(true);
-    setTimeout(() => setIsLoading(false), 2000);
+  // ----- GPT Output -----
+  const [playlist, setPlaylist] = useState([]);
+  const [dallePrompt, setDallePrompt] = useState(""); // Ben returns dallePrompt
+  const [museumArtQueries, setMuseumArtQueries] = useState([]); // temporary Phase 1 structure
+
+  // ----- museum artwork objects -----
+  const [artworkArray, setArtworkArray] = useState([]); 
+  // Will be populated once GPT returns full artwork objects (id, museum, image_id, etc.)
+
+  // ----- Loading States -----
+  const [loading, setLoading] = useState({
+    gpt: false,
+    dalle: false,
+    museum: false,
+  });
+
+  // ----- Error States -----
+  const [errors, setErrors] = useState({
+    gpt: null,
+    dalle: null,
+    museum: null,
+  });
+
+  // ----- Saved Experiences -----
+  const [savedExperiences, setSavedExperiences] = useState([]);
+
+  // Load saved experiences on mount
+  useEffect(() => {
+    const stored = localStorage.getItem("muse_ai_saved");
+    if (stored) {
+      setSavedExperiences(JSON.parse(stored));
+    }
+  }, []);
+
+  // Reset current session (not saved experiences)
+  const resetSession = () => {
+    setPlaylist([]);
+    setDallePrompt("");
+    setMuseumArtQueries([]);
+    setArtworkArray([]);
+    setLoading({ gpt: false, dalle: false, museum: false });
+    setErrors({ gpt: null, dalle: null, museum: null });
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: '60px auto', padding: '0 24px' }}>
-      <h1>SYNA</h1>
-      <p>Your mood. Your music. Your art.</p>
-      <SYNAForm onSubmit={handleSubmit} isLoading={isLoading} />
+    <div>
+      <Header resetSession={resetSession} />
+
+      <MoodForm 
+        moodInputs={moodInputs} 
+        setMoodInputs={setMoodInputs} 
+      />
+
+      <ResultsContainer
+        loading={loading}
+        errors={errors}
+        playlist={playlist}
+        dallePrompt={dallePrompt}
+        museumArtQueries={museumArtQueries}
+        artworkArray={artworkArray}
+      />
     </div>
   );
-}
+};
 
 export default App;
