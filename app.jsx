@@ -1,16 +1,13 @@
 import { useState, useEffect } from "react";
-import Form from "./components/Form";
-import PlaylistDisplay from "./components/PlaylistDisplay";
-import CoverArt from "./components/CoverArt";
-import ArtSlideshow from "./components/ArtSlideshow";
 import Header from "./components/Header";
+import MoodForm from "./components/MoodForm";
 import ResultsContainer from "./components/ResultsContainer";
 
 const App = () => {
   // ----- Mood Inputs -----
   const [moodInputs, setMoodInputs] = useState({
     moodText: "",
-    artist: "",
+    artists: [],
     genres: [],
     energy: "",
     occasion: "",
@@ -19,8 +16,12 @@ const App = () => {
 
   // ----- GPT Output -----
   const [playlist, setPlaylist] = useState([]);
-  const [coverArtUrl, setCoverArtUrl] = useState("");
-  const [artworkArray, setArtworkArray] = useState([]);
+  const [dallePrompt, setDallePrompt] = useState(""); // Ben returns dallePrompt
+  const [museumArtQueries, setMuseumArtQueries] = useState([]); // temporary Phase 1 structure
+
+  // ----- museum artwork objects -----
+  const [artworkArray, setArtworkArray] = useState([]); 
+  // Will be populated once GPT returns full artwork objects (id, museum, image_id, etc.)
 
   // ----- Loading States -----
   const [loading, setLoading] = useState({
@@ -50,7 +51,8 @@ const App = () => {
   // Reset current session (not saved experiences)
   const resetSession = () => {
     setPlaylist([]);
-    setCoverArtUrl("");
+    setDallePrompt("");
+    setMuseumArtQueries([]);
     setArtworkArray([]);
     setLoading({ gpt: false, dalle: false, museum: false });
     setErrors({ gpt: null, dalle: null, museum: null });
@@ -59,12 +61,18 @@ const App = () => {
   return (
     <div>
       <Header resetSession={resetSession} />
-      <Form moodInputs={moodInputs} setMoodInputs={setMoodInputs} />
+
+      <MoodForm 
+        moodInputs={moodInputs} 
+        setMoodInputs={setMoodInputs} 
+      />
+
       <ResultsContainer
         loading={loading}
         errors={errors}
         playlist={playlist}
-        coverArtUrl={coverArtUrl}
+        dallePrompt={dallePrompt}
+        museumArtQueries={museumArtQueries}
         artworkArray={artworkArray}
       />
     </div>
