@@ -4,14 +4,14 @@ import PlaylistCard from './PlaylistCard';
 export default function PlaylistDisplay({ data, loading, error }) {
   
   const handleSaveExperience = () => {
-    if (!data) return;
-    try {
-      localStorage.setItem('syna_saved_experience', JSON.stringify(data));
-      alert('🔒 Complete mood experience successfully saved to your browser local storage!');
-    } catch (err) {
-      console.error('Failed to save to localStorage:', err);
-    }
-  };
+  if (!data) return;
+  try {
+    localStorage.setItem('syna_saved_experience', JSON.stringify(data));
+    alert('🔒 Complete mood experience successfully saved to your browser local storage!');
+  } catch (err) {
+    alert('⚠️ Could not save your experience. Your browser storage may be full or restricted.');
+  }
+};
 
   if (loading) {
     return (
@@ -72,17 +72,10 @@ export default function PlaylistDisplay({ data, loading, error }) {
         <h2>🎵 Your Mood-Driven Playlist</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
           {data.playlist.map((track) => (
-            <div 
-              key={track.id} // Fulfills requirement: stable ID, no array index!
-              style={{ borderBottom: '1px solid #eee', paddingBottom: '15px' }}
-            >
-              <h3 style={{ margin: '0 0 5px 0', color: '#111' }}>
-                {track.title} <span style={{ fontWeight: 'normal', color: '#666', fontSize: '0.9em' }}>by {track.artist}</span>
-              </h3>
-              <p style={{ margin: '0', color: '#555', fontSize: '0.95em' }}>
-                {track.justification}
-              </p>
-            </div>
+            <PlaylistCard 
+              key={track.id} 
+              track={track} 
+            />
           ))}
         </div>
       </section>
@@ -90,9 +83,9 @@ export default function PlaylistDisplay({ data, loading, error }) {
       <section className="museum-section" style={{ background: '#f5f7fa', padding: '20px', borderRadius: '8px' }}>
         <h2>🏛️ Classical Museum Pairings</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '15px' }}>
-          {data.museumArtQueries.map((query, index) => (
+          {data.museumArtQueries.map((query) => (
             <div 
-              key={`museum-${index}`} // Index is okay here temporary since queries are static text blocks
+              key={query.id} 
               style={{ background: '#fff', padding: '15px', borderRadius: '6px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
             >
               <h4 style={{ margin: '0 0 8px 0', color: '#0070f3' }}>
