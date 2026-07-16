@@ -1,6 +1,18 @@
 import React from 'react';
+import PlaylistCard from './PlaylistCard';
 
 export default function PlaylistDisplay({ data, loading, error }) {
+  
+  const handleSaveExperience = () => {
+    if (!data) return;
+    try {
+      localStorage.setItem('syna_saved_experience', JSON.stringify(data));
+      alert('🔒 Complete mood experience successfully saved to your browser local storage!');
+    } catch (err) {
+      console.error('Failed to save to localStorage:', err);
+    }
+  };
+
   if (loading) {
     return (
       <div className="loading-container" style={{ padding: '20px', textAlign: 'center' }}>
@@ -27,6 +39,24 @@ export default function PlaylistDisplay({ data, loading, error }) {
 
   return (
     <div className="playlist-display-container" style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
+      
+      <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
+        <button
+          onClick={handleSaveExperience}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#28a745',
+            color: '#fff',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            fontWeight: 'bold',
+            fontSize: '14px'
+          }}
+        >
+          💾 Save Complete Experience
+        </button>
+      </div>
       
       <section className="cover-art-section" style={{ marginBottom: '40px', background: '#f9f9f9', padding: '20px', borderRadius: '8px' }}>
         <h2>🎨 AI Cover Art Concept</h2>

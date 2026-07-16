@@ -70,11 +70,9 @@ export function usePlaylist(userInputs, options = { useMock: true }) {
 
       try {
         if (options.useMock) {
-          // Simulate network delay for a authentic app loading experience
           await new Promise((resolve) => setTimeout(resolve, 1500));
           setData(MOCK_AI_RESPONSE);
         } else {
-          // Future live connection via Evan's Netlify function
           throw new Error("Live API proxy route not yet configured.");
         }
       } catch (err) {
