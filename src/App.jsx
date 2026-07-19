@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import Header from "./components/Header";
-import MoodForm from "./components/MoodForm";
-import ResultsContainer from "./components/ResultsContainer";
+//import Header from "./components/Header"; // Commenting out until Header is built -AB
+//import MoodForm from "./components/MoodForm"; //Commenting out until MoodForm is built -AB
+import {ResultsContainer} from "./components/ResultsContainer"; 
 import './App.css';
 import SYNAForm from './components/SYNAForm';
 
@@ -64,10 +64,10 @@ const App = () => {
     <div>
       <Header resetSession={resetSession} />
 
-      <MoodForm 
+      {/*<MoodForm 
         moodInputs={moodInputs} 
         setMoodInputs={setMoodInputs} 
-      />
+      /> ---Commenting out until MoodForm is built -AB*/}
 
       <ResultsContainer
         loading={loading}
