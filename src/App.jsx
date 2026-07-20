@@ -1,49 +1,84 @@
-import React, { useState } from 'react';
-import { usePlaylist } from './usePlaylist';
-import PlaylistDisplay from './PlaylistDisplay';
+import { useState, useEffect } from "react";
+import Header from "./components/Header";
+import MoodForm from "./components/MoodForm";
+import ResultsContainer from "./components/ResultsContainer";
+import './App.css';
+import SYNAForm from './components/SYNAForm';
 
-export default function App() {
-  const [formInputs, setFormInputs] = useState(null);
+const App = () => {
+  // ----- Mood Inputs -----
+  const [moodInputs, setMoodInputs] = useState({
+    moodText: "",
+    artists: [],
+    genres: [],
+    energy: "",
+    occasion: "",
+    discovery: 50,
+  });
 
-  const { data, loading, error } = usePlaylist(formInputs, { useMock: true });
+  // ----- GPT Output -----
+  const [playlist, setPlaylist] = useState([]);
+  const [dallePrompt, setDallePrompt] = useState(""); // Ben returns dallePrompt
+  const [museumArtQueries, setMuseumArtQueries] = useState([]); // temporary Phase 1 structure
 
-  const handleSimulateFormSubmit = () => {
-    setFormInputs({
-      mood: "Melancholic but Energetic",
-      artists: ["The Weeknd", "Kavinsky"],
-      genre: "Synthwave",
-      energy: 8,
-      activity: "Late Night Drive"
-    });
+  // ----- museum artwork objects -----
+  const [artworkArray, setArtworkArray] = useState([]); 
+  // Will be populated once GPT returns full artwork objects (id, museum, image_id, etc.)
+
+  // ----- Loading States -----
+  const [loading, setLoading] = useState({
+    gpt: false,
+    dalle: false,
+    museum: false,
+  });
+
+  // ----- Error States -----
+  const [errors, setErrors] = useState({
+    gpt: null,
+    dalle: null,
+    museum: null,
+  });
+
+  // ----- Saved Experiences -----
+  const [savedExperiences, setSavedExperiences] = useState([]);
+
+  // Load saved experiences on mount
+  useEffect(() => {
+    const stored = localStorage.getItem("muse_ai_saved");
+    if (stored) {
+      setSavedExperiences(JSON.parse(stored));
+    }
+  }, []);
+
+  // Reset current session (not saved experiences)
+  const resetSession = () => {
+    setPlaylist([]);
+    setDallePrompt("");
+    setMuseumArtQueries([]);
+    setArtworkArray([]);
+    setLoading({ gpt: false, dalle: false, museum: false });
+    setErrors({ gpt: null, dalle: null, museum: null });
   };
 
   return (
-    <div style={{ fontFamily: 'sans-serif', padding: '40px', backgroundColor: '#fafafa', minHeight: '100vh' }}>
-      <header style={{ textAlign: 'center', marginBottom: '30px' }}>
-        <h1>Group Project Test Environment (Ben's Portion)</h1>
-        <p>Testing async hooks, data contracts, and list rendering logic.</p>
-        
-        <button 
-          onClick={handleSimulateFormSubmit} 
-          disabled={loading}
-          style={{
-            padding: '12px 24px',
-            fontSize: '16px',
-            backgroundColor: '#0070f3',
-            color: '#fff',
-            border: 'none',
-            borderRadius: '5px',
-            cursor: 'pointer',
-            fontWeight: 'bold'
-          }}
-        >
-          {loading ? 'AI Engine Working...' : 'Simulate Form Submission'}
-        </button>
-      </header>
+    <div>
+      <Header resetSession={resetSession} />
 
-      <main style={{ background: '#fff', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.05)' }}>
-        <PlaylistDisplay data={data} loading={loading} error={error} />
-      </main>
+      <MoodForm 
+        moodInputs={moodInputs} 
+        setMoodInputs={setMoodInputs} 
+      />
+
+      <ResultsContainer
+        loading={loading}
+        errors={errors}
+        playlist={playlist}
+        dallePrompt={dallePrompt}
+        museumArtQueries={museumArtQueries}
+        artworkArray={artworkArray}
+      />
     </div>
   );
-}
+};
+
+export default App;

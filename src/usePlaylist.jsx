@@ -41,7 +41,7 @@ const MOCK_AI_RESPONSE = {
 function isValidInput(inputs) {
   if (!inputs || typeof inputs !== 'object') return false;
   const hasMood = typeof inputs.mood === 'string' && inputs.mood.trim().length > 0;
-  const hasGenre = typeof inputs.genre === 'string' && inputs.genre.trim().length > 0;
+  const hasGenre = !inputs.genre || (typeof inputs.genre === 'string' && inputs.genre.trim().length > 0);
   const hasArtists = Array.isArray(inputs.artists) && inputs.artists.length > 0;
   return hasMood && hasGenre && hasArtists;
 }
