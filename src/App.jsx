@@ -44,8 +44,8 @@ const App = () => {
   // Phase 2: Trigger museum API when GPT returns artworks
   useEffect(() => {
     if (!data) return;
-    if (data.artworks) {
-      fetchMuseumArt(data.artworks);
+    if (data.museumArtQueries && data.museumArtQueries.length > 0) {
+      fetchMuseumArt(data.museumArtQueries);
     }
   }, [data, fetchMuseumArt]);
 
