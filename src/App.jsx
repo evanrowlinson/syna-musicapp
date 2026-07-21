@@ -77,9 +77,10 @@ const App = () => {
       <Header resetSession={resetSession} />
 
       <SynaForm
-        userInputs={userInputs}
-        setUserInputs={setUserInputs}
+          onSubmit={setUserInputs}
+          isLoading={loading}
       />
+
 
       <ResultsContainer
         loading={loading}
