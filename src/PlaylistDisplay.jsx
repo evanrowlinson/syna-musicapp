@@ -4,14 +4,14 @@ import PlaylistCard from './PlaylistCard';
 export default function PlaylistDisplay({ data, loading, error }) {
   
   const handleSaveExperience = () => {
-  if (!data) return;
-  try {
-    localStorage.setItem('syna_saved_experience', JSON.stringify(data));
-    alert('🔒 Complete mood experience successfully saved to your browser local storage!');
-  } catch (err) {
-    alert('⚠️ Could not save your experience. Your browser storage may be full or restricted.');
-  }
-};
+    if (!data) return;
+    try {
+      localStorage.setItem('syna_saved_experience', JSON.stringify(data));
+      alert('🔒 Complete mood experience successfully saved to your browser local storage!');
+    } catch (err) {
+      alert('⚠️ Could not save your experience. Your browser storage may be full or restricted.');
+    }
+  };
 
   if (loading) {
     return (
@@ -63,9 +63,6 @@ export default function PlaylistDisplay({ data, loading, error }) {
         <p style={{ fontStyle: 'italic', color: '#444', lineHeight: '1.6' }}>
           "{data.dallePrompt}"
         </p>
-        <blockquote style={{ fontSize: '0.9em', color: '#666', borderLeft: '4px solid #0070f3', paddingLeft: '10px', margin: '15px 0 0 0' }}>
-          <strong>Note for Phase 2:</strong> This prompt will pass in parallel to DALL-E 3 to render the live cover image here.
-        </blockquote>
       </section>
 
       <section className="tracks-section" style={{ marginBottom: '40px' }}>
@@ -97,9 +94,6 @@ export default function PlaylistDisplay({ data, loading, error }) {
             </div>
           ))}
         </div>
-        <blockquote style={{ fontSize: '0.9em', color: '#666', borderLeft: '4px solid #0070f3', paddingLeft: '10px', margin: '20px 0 0 0' }}>
-          <strong>Note for Phase 2:</strong> These keywords will query the public museum API to build your interactive slideshow.
-        </blockquote>
       </section>
 
     </div>
