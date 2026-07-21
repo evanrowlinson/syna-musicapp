@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import MoodForm from "./components/MoodForm";
 import ResultsContainer from "./components/ResultsContainer";
-import { usePlaylist } from "src/usePlaylist.jsx";
+import { usePlaylist } from "./usePlaylist";
 import useMuseumArt from "./hooks/useMuseumArt";
 
 const App = () => {
