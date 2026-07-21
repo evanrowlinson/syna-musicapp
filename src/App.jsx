@@ -106,10 +106,8 @@ const {
       <Header resetSession={resetSession} />
 
       <SYNAForm
-        moodInputs={moodInputs}
-        setMoodInputs={setMoodInputs}
-        handleSubmit={handleSubmit}
-        loading={loading.gpt}
+  onSubmit={handleSubmit}
+  isLoading={loading.gpt}
       />
 
       <ResultsContainer
