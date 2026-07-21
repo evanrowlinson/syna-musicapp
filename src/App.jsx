@@ -74,9 +74,18 @@ const App = () => {
         dallePrompt={dallePrompt}
         museumArtQueries={museumArtQueries}
         artworkArray={artworkArray}
+        loadingMuseum={loadingMuseum}
+        errorMuseum={errorMuseum}
       />
     </div>
   );
 };
+//MUSEUM API HOOK USE
+const {
+  artworkArray,
+  loadingMuseum,
+  errorMuseum,
+  fetchMuseumArt
+} = useMuseumArt();
 
 export default App;
