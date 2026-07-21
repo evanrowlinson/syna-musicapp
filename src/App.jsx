@@ -39,34 +39,38 @@ const App = () => {
   });
 
   // -----Front-end connection to generate-proxy.js (serverless funtion) -----
-  const handleSubmit = async (mod) => {
-    setLoading({gpt: true, dalle: false, museum: false});
-    setErrors({ gpt: null, dalle: null, museum: null });
+  const handleSubmit = async (formData) => {
+  // ------ Update moodInputs with SYNAForm data ------
+  setMoodInputs(formData);
 
-    try {
-      // Call GPT to generate playlist and DALL-E prompt
-      const gptResponse = await fetch("/.netlify/functions/generate-proxy", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({moodInputs}),
-      });
+  setLoading({ gpt: true, dalle: true, museum: true });
+  setErrors({ gpt: null, dalle: null, museum: null });
 
-      const data = await gptResponse.json();
+  try {
+    const gptResponse = await fetch("/.netlify/functions/generate-proxy", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ moodInputs: formData }),
+    });
 
-      setPlaylist(data.playlist || []);
-      setDallePrompt(data.dallePrompt || "");
-      setMuseumArtQueries(data.museumArtQueries || []);
-      setLoading({gpt: false, dalle: false, museum: false});
-    } catch (err) {
-      console.error("Pipeline error:", err);
-      setErrors({
-        gpt: "GPT failed",
-        dalle: "DALL-E failed",
-        museum: "Museum API failed"
-      });
-      setLoading({gpt: false, dalle: false, museum: false});
-    }
-  };
+    const data = await gptResponse.json();
+
+    setPlaylist(data.playlist || []);
+    setDallePrompt(data.coverArt || "");
+    setMuseumArtQueries(data.museumArt || []);
+    setArtworkArray(data.museumArt || []);
+
+    setLoading({ gpt: false, dalle: false, museum: false });
+  } catch (err) {
+    console.error("Pipeline error:", err);
+    setErrors({
+      gpt: "GPT failed",
+      dalle: "DALL-E failed",
+      museum: "Museum API failed",
+    });
+    setLoading({ gpt: false, dalle: false, museum: false });
+  }
+};
 
   // ----- Saved Experiences -----
   const [savedExperiences, setSavedExperiences] = useState([]);
@@ -94,11 +98,10 @@ const App = () => {
       <Header resetSession={resetSession} />
 
       <SYNAForm
-        moodInputs={moodInputs}
-        setMoodInputs={setMoodInputs}
-        handleSubmit={handleSubmit}
-        loading={loading.gpt}
+        onSubmit={handleSubmit}
+        isLoading={loading.gpt || loading.dalle || loading.museum}
       />
+
 
       <ResultsContainer
         loading={loading}
