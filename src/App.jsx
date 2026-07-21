@@ -3,6 +3,8 @@ import Header from "./components/Header";
 import MoodForm from "./components/MoodForm";
 import ResultsContainer from "./components/ResultsContainer";
 import { usePlaylist } from "./hooks/usePlaylist";
+import useMuseumArt from "./hooks/useMuseumArt";
+
 
 const App = () => {
   // ----- Mood Inputs (renamed to match Ben's expected shape) -----
