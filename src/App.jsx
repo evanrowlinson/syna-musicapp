@@ -35,6 +35,15 @@ const App = () => {
     setMuseumArtQueries(data.museumArtQueries);
   }, [data]);
 
+  useEffect(() => {
+  if (!data) return;
+    
+  if (data.artworks) {
+    fetchMuseumArt(data.artworks);
+  }
+}, [data]);
+
+
   // Reset session
   const resetSession = () => {
     setPlaylist([]);
