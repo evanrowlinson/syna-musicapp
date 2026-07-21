@@ -15,10 +15,10 @@ const App = () => {
     discovery: 50
   });
 
-  // ----- GPT Hook (Ben's logic) -----
+  // ----- GPT Hook -----
   const { data, loading, error } = usePlaylist(userInputs);
 
-  // ----- Global State (your architecture) -----
+  // ----- Global State -----
   const [playlist, setPlaylist] = useState([]);
   const [dallePrompt, setDallePrompt] = useState("");
   const [museumArtQueries, setMuseumArtQueries] = useState([]);
