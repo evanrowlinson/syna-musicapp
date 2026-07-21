@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import Header from "./components/Header";
-import MoodForm from "./components/MoodForm";
-import ResultsContainer from "./components/ResultsContainer";
+import Header from "./components/Header"; 
+import {ResultsContainer} from "./components/ResultsContainer"; 
+import './App.css';
+import SYNAForm from './components/SYNAForm';
 
 const App = () => {
   // ----- Mood Inputs -----
@@ -22,6 +23,7 @@ const App = () => {
   // ----- Phase 2: Final museum artwork objects -----
   const [artworkArray, setArtworkArray] = useState([]); 
 
+
   // ----- Loading States -----
   const [loading, setLoading] = useState({
     gpt: false,
@@ -35,6 +37,36 @@ const App = () => {
     dalle: null,
     museum: null,
   });
+
+  // -----Front-end connection to generate-proxy.js (serverless funtion) -----
+  const handleSubmit = async (mod) => {
+    setLoading({gpt: true, dalle: false, museum: false});
+    setErrors({ gpt: null, dalle: null, museum: null });
+
+    try {
+      // Call GPT to generate playlist and DALL-E prompt
+      const gptResponse = await fetch("/.netlify/functions/generate-proxy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({moodInputs}),
+      });
+
+      const data = await gptResponse.json();
+
+      setPlaylist(data.playlist || []);
+      setDallePrompt(data.dallePrompt || "");
+      setMuseumArtQueries(data.museumArtQueries || []);
+      setLoading({gpt: false, dalle: false, museum: false});
+    } catch (err) {
+      console.error("Pipeline error:", err);
+      setErrors({
+        gpt: "GPT failed",
+        dalle: "DALL-E failed",
+        museum: "Museum API failed"
+      });
+      setLoading({gpt: false, dalle: false, museum: false});
+    }
+  };
 
   // ----- Saved Experiences -----
   const [savedExperiences, setSavedExperiences] = useState([]);
@@ -61,14 +93,11 @@ const App = () => {
     <div>
       <Header resetSession={resetSession} />
 
-      <MoodForm 
-        moodInputs={moodInputs} 
-        setMoodInputs={setMoodInputs} 
-        setLoading={setLoading}
-        setErrors={setErrors}
-        setPlaylist={setPlaylist}
-        setDallePrompt={setDallePrompt}
-        setMuseumArtQueries={setMuseumArtQueries}
+      <SYNAForm
+        moodInputs={moodInputs}
+        setMoodInputs={setMoodInputs}
+        handleSubmit={handleSubmit}
+        loading={loading.gpt}
       />
 
       <ResultsContainer
@@ -79,6 +108,7 @@ const App = () => {
         museumArtQueries={museumArtQueries}
         artworkArray={artworkArray}
       />
+
     </div>
   );
 };

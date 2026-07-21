@@ -182,3 +182,164 @@
     border-right-color: var(--border);
   }
 }
+
+*/ Art Generation Module CSS */
+
+.results-container-module {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 30px;
+  margin: 40px auto;
+  max-width: 650px;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  text-align: center;
+}
+
+.result-container-module h2 {
+  color: #ffffff;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+.prompt-input{
+  width: 100%;
+  padding: 14px 18px;
+  background: #121212;
+  border: 1px solid #333333;
+  color: #ffffff;
+  font-size: 0.95rem;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.prompt-input:focus {
+  outline: none;
+  border-color: #1DB954;
+  box-shadow: 0 0 8px rgba(29, 185, 84, 0.3);
+}
+
+.prompt-input:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.generate-btn {
+  padding: 14px;
+  background: #1DB954;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(29, 185, 84, 0.2);
+}
+
+.generate-btn:hoover:not(:disabled) {
+  background: #1ed760;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(29, 185, 84, 0.3);
+}
+
+generate-btn:disabled {
+  background: #333333;
+  color: #777777;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.cover-art-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.cover-art-card h3 {
+  color: #b3b3b3;
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.responsive-art-img {
+  max-width: 100%;
+  width: 300px;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 12px;
+  box-shadow: 0 16px 38px rgba(0, 0, 0, 0.6);
+  transition: transform 0.3s ease;
+}
+
+.responsive-art-img:hover {
+  transform: scale(1.02);
+}
+
+.download-btn {
+  margin-top: 18px;
+  display: inline-block;
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 20px;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.download-btn:hover {
+  background: #ffffff;
+  color: #000000;
+  border-color: #ffffff;
+}
+.art-placeholder {
+  padding: 50px 20px;
+  border: 2px dashed rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #777777;
+  font-style: italic;
+  font-size: 0.95rem;
+}
+
+/* Clear Loading Spinner Structure */
+.art-loading-container {
+  padding: 40px 20px;
+  color: #b3b3b3;
+  font-size: 0.95rem;
+}
+
+.spinner {
+  width: 44px;
+  height: 44px;
+  border: 4px solid rgba(255, 255, 255, 0.1);
+  border-top-color: #1DB954;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 16px;
+}
+.art-error-banner {
+  background: rgba(234, 56, 56, 0.1);
+  border: 1px solid rgba(234, 56, 56, 0.3);
+  border-radius: 8px;
+  padding: 14px;
+  color: #ea3838;
+  font-size: 0.9rem;
+  margin-top: 16px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
