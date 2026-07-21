@@ -1,18 +1,21 @@
-import React, { useState } from 'react';
-import { useGenArt } from '../hooks/useArtGen';
-import { CoverArt } from './CoverArt';
+import React, { useState } from "react";
+import PlaylistDisplay from "./PlaylistDisplay";
+import CoverArt from "./CoverArt";
+import ArtSlideshow from "./ArtSlideshow";
+import { useGenArt } from "../hooks/useArtGen";
 
-export const ResultsContainer = ({
+const ResultsContainer = ({
   loading,
-  errors,
+  error,
   playlist,
   dallePrompt,
   museumArtQueries,
-  artworkArray
+  artworkArray,
+  loadingMuseum,
+  errorMuseum
 }) => {
-
   // Custom artwork generator (useArtGen)
-  const [promptText, setPromptText] = useState('');
+  const [promptText, setPromptText] = useState("");
   const {
     imageURL,
     loading: artLoading,
@@ -20,18 +23,17 @@ export const ResultsContainer = ({
     generateArt
   } = useGenArt();
 
-  // ----- SYNA Loading -----
-  if (loading?.gpt || loading?.dalle || loading?.museum) {
+  // ----- GPT / DALL-E / Museum Loading -----
+  if (loading === true || loadingMuseum === true) {
     return <p>Generating your SYNA experience…</p>;
   }
 
-  // ----- SYNA Errors -----
-  if (errors?.gpt || errors?.dalle || errors?.museum) {
+  // ----- GPT / DALL-E / Museum Errors -----
+  if (error !== null || errorMuseum !== null) {
     return (
       <div className="error-banner">
-        {errors.gpt && <p>Error generating playlist: {errors.gpt}</p>}
-        {errors.dalle && <p>Error generating artwork: {errors.dalle}</p>}
-        {errors.museum && <p>Error fetching museum art: {errors.museum}</p>}
+        {error && <p>Error generating playlist: {error}</p>}
+        {errorMuseum && <p>Error fetching museum art: {errorMuseum}</p>}
       </div>
     );
   }
@@ -39,24 +41,11 @@ export const ResultsContainer = ({
   return (
     <div className="results-container-module">
 
-
       {/*       SYNA Playlist       */}
       {playlist && playlist.length > 0 && (
         <section>
           <h2>Your SYNA Playlist</h2>
-          <ul>
-            {playlist.map((track, idx) => (
-              <li key={idx}>
-                {track.title ? (
-                  <>
-                    <strong>{track.title}</strong> — {track.artist}
-                  </>
-                ) : (
-                  track
-                )}
-              </li>
-            ))}
-          </ul>
+          <PlaylistDisplay playlist={playlist} />
         </section>
       )}
 
@@ -64,32 +53,19 @@ export const ResultsContainer = ({
       {dallePrompt && (
         <section>
           <h2>SYNA Cover Art</h2>
-          <img
-            src={dallePrompt}
-            alt="Generated cover art"
-            style={{ width: '300px', borderRadius: '12px' }}
-          />
+          <CoverArt dallePrompt={dallePrompt} />
         </section>
       )}
 
-      {/*     SYNA Museum Art     */}
+      {/*     SYNA Museum Art Slideshow     */}
       {artworkArray && artworkArray.length > 0 && (
         <section>
           <h2>SYNA Museum Art</h2>
-          <div className="museum-grid">
-            {artworkArray.map((art, idx) => (
-              <figure key={idx}>
-                <img
-                  src={art.primaryImageSmall}
-                  alt={art.title}
-                  style={{ width: '200px', borderRadius: '8px' }}
-                />
-                <figcaption>
-                  {art.title} — {art.artistDisplayName}
-                </figcaption>
-              </figure>
-            ))}
-          </div>
+          <ArtSlideshow
+            artworkArray={artworkArray}
+            loadingMuseum={loadingMuseum}
+            errorMuseum={errorMuseum}
+          />
         </section>
       )}
 
@@ -100,7 +76,7 @@ export const ResultsContainer = ({
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            if (promptText.trim() !== '') generateArt(promptText);
+            if (promptText.trim() !== "") generateArt(promptText);
           }}
           className="prompt-form"
         >
@@ -115,10 +91,10 @@ export const ResultsContainer = ({
 
           <button
             type="submit"
-            disabled={artLoading || promptText.trim() === ''}
+            disabled={artLoading || promptText.trim() === ""}
             className="generate-btn"
           >
-            {artLoading ? 'Generating...' : 'Generate Artwork'}
+            {artLoading ? "Generating..." : "Generate Artwork"}
           </button>
         </form>
 
@@ -128,3 +104,5 @@ export const ResultsContainer = ({
     </div>
   );
 };
+
+export default ResultsContainer;
