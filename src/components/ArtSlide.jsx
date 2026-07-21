@@ -1,23 +1,28 @@
 import React from "react";
 
 const ArtSlide = ({ art }) => {
+  if (!art) return null;
+
+  const image =
+    art.primaryImageSmall ||
+    art.image_url ||
+    art.imageUrl ||
+    "";
+
   return (
-    <div className="art-slide">
-      <img 
-        src={art.imageUrl} 
-        alt={art.title} 
-        className="art-image"
-      />
-
-      <h3>{art.title}</h3>
-      <p><strong>Artist:</strong> {art.artist}</p>
-      <p><strong>Period:</strong> {art.period}</p>
-      <p><strong>Museum:</strong> {art.museum}</p>
-
-      <p className="art-justification">
-        {art.justification}
-      </p>
-    </div>
+    <figure>
+      {image && (
+        <img
+          src={image}
+          alt={art.title}
+          style={{ width: "250px", borderRadius: "8px" }}
+        />
+      )}
+      <figcaption>
+        <div>{art.title}</div>
+        <div>{art.artistDisplayName || art.artist_title}</div>
+      </figcaption>
+    </figure>
   );
 };
 
