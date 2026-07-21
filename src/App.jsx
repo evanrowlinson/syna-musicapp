@@ -43,6 +43,10 @@ const App = () => {
   }
 }, [data]);
 
+// Wire museum API in App.jsx
+  if (data.artworks) {
+  fetchMuseumArt(data.artworks);
+}
 
   // Reset session
   const resetSession = () => {
