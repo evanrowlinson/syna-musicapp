@@ -1,5 +1,4 @@
 const OpenAI = require("openai");
-const fetch = require("node-fetch");
 
 exports.handler = async (event) => {
     if (event.httpMethod !== "POST") {
@@ -61,7 +60,7 @@ exports.handler = async (event) => {
                 const museumResponse = await fetch(
                     `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
                 );
-                return await response.json();
+                return await museumResponse.json();
             })
         );
 

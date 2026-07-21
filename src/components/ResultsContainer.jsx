@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useArtGen } from '../hooks/useArtGen'
-import { CoverArt } from './CoverArt';
+import {CoverArt} from './CoverArt'
 
 export const ResultsContainer = ({
   loading,
