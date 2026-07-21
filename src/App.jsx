@@ -5,9 +5,8 @@ import ResultsContainer from "./components/ResultsContainer";
 import { usePlaylist } from "./hooks/usePlaylist";
 import useMuseumArt from "./hooks/useMuseumArt";
 
-
 const App = () => {
-  // ----- Mood Inputs (renamed to match Ben's expected shape) -----
+  // ----- Mood Inputs (Ben's expected shape) -----
   const [userInputs, setUserInputs] = useState({
     mood: "",
     artists: [],
@@ -20,13 +19,18 @@ const App = () => {
   // ----- GPT Hook -----
   const { data, loading, error } = usePlaylist(userInputs);
 
+  // ----- Museum API Hook -----
+  const {
+    artworkArray,
+    loadingMuseum,
+    errorMuseum,
+    fetchMuseumArt
+  } = useMuseumArt();
+
   // ----- Global State -----
   const [playlist, setPlaylist] = useState([]);
   const [dallePrompt, setDallePrompt] = useState("");
   const [museumArtQueries, setMuseumArtQueries] = useState([]);
-
-  // Phase 2: museum API results
-  const [artworkArray, setArtworkArray] = useState([]);
 
   // Sync GPT output into global state
   useEffect(() => {
@@ -37,25 +41,20 @@ const App = () => {
     setMuseumArtQueries(data.museumArtQueries);
   }, [data]);
 
+  // Phase 2: Trigger museum API when GPT returns artworks
   useEffect(() => {
-  if (!data) return;
-    
-  if (data.artworks) {
-    fetchMuseumArt(data.artworks);
-  }
-}, [data]);
-
-// Wire museum API in App.jsx
-  if (data.artworks) {
-  fetchMuseumArt(data.artworks);
-}
+    if (!data) return;
+    if (data.artworks) {
+      fetchMuseumArt(data.artworks);
+    }
+  }, [data, fetchMuseumArt]);
 
   // Reset session
   const resetSession = () => {
     setPlaylist([]);
     setDallePrompt("");
     setMuseumArtQueries([]);
-    setArtworkArray([]);
+    // museum API state resets automatically inside the hook
   };
 
   return (
@@ -80,12 +79,5 @@ const App = () => {
     </div>
   );
 };
-//MUSEUM API HOOK USE
-const {
-  artworkArray,
-  loadingMuseum,
-  errorMuseum,
-  fetchMuseumArt
-} = useMuseumArt();
 
 export default App;
