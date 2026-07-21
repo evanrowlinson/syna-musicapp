@@ -5,62 +5,40 @@ const useMuseumArt = () => {
   const [loadingMuseum, setLoadingMuseum] = useState(false);
   const [errorMuseum, setErrorMuseum] = useState(null);
 
-  // Phase 2: GPT will return full artwork objects with:
-  // id, museum, image_id, title, artist, period, justification
-  const fetchMuseumArt = async (artworksFromGPT) => {
+  const fetchMuseumArt = async (museumArtQueries) => {
     setLoadingMuseum(true);
     setErrorMuseum(null);
 
     try {
       const results = [];
 
-      for (const art of artworksFromGPT) {
-        let apiUrl = "";
+      for (const query of museumArtQueries) {
+        const { museum, objectId } = query;
 
-        // Determine which museum API to call
-        if (art.museum === "met") {
-          apiUrl = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${art.id}`;
-        } else if (art.museum === "aic") {
-          apiUrl = `https://api.artic.edu/api/v1/artworks/${art.id}`;
+        if (museum === "met") {
+          const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectId}`;
+          const res = await fetch(url);
+          const data = await res.json();
+          results.push(data);
         }
 
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        // Normalize image URL depending on museum source
-        let imageUrl = "";
-
-        if (art.museum === "met") {
-          imageUrl = data.primaryImage;
-        } else if (art.museum === "aic") {
-          imageUrl = `https://www.artic.edu/iiif/2/${data.image_id}/full/843,/0/default.jpg`;
+        if (museum === "aic") {
+          const url = `https://api.artic.edu/api/v1/artworks/${objectId}`;
+          const res = await fetch(url);
+          const data = await res.json();
+          results.push(data.data);
         }
-
-        results.push({
-          id: art.id,
-          museum: art.museum,
-          title: art.title,
-          artist: art.artist,
-          period: art.period,
-          justification: art.justification,
-          imageUrl: imageUrl
-        });
       }
 
       setArtworkArray(results);
     } catch (err) {
-      setErrorMuseum("Failed to fetch museum artwork.");
+      setErrorMuseum(err.message || "Error fetching museum art.");
     } finally {
       setLoadingMuseum(false);
     }
   };
 
-  return {
-    artworkArray,
-    loadingMuseum,
-    errorMuseum,
-    fetchMuseumArt
-  };
+  return { artworkArray, loadingMuseum, errorMuseum, fetchMuseumArt };
 };
 
 export default useMuseumArt;
