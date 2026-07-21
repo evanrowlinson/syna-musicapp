@@ -4,6 +4,8 @@ import {ResultsContainer} from "./components/ResultsContainer";
 import './App.css';
 import SYNAForm from './components/SYNAForm';
 import useMuseumArt from "./hooks/useMuseumArt";
+import usePlaylist from "./hooks/usePlaylist";
+
 
 
 const App = () => {
