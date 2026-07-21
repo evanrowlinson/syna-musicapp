@@ -15,14 +15,13 @@ const App = () => {
     discovery: 50,
   });
 
-  // ----- GPT Output -----
+  // ----- GPT Output-----
   const [playlist, setPlaylist] = useState([]);
-  const [dallePrompt, setDallePrompt] = useState(""); // Ben returns dallePrompt
-  const [museumArtQueries, setMuseumArtQueries] = useState([]); // temporary Phase 1 structure
+  const [dallePrompt, setDallePrompt] = useState(""); 
+  const [museumArtQueries, setMuseumArtQueries] = useState([]); 
 
-  // ----- museum artwork objects -----
+  // ----- Phase 2: Final museum artwork objects -----
   const [artworkArray, setArtworkArray] = useState([]); 
-  // Will be populated once GPT returns full artwork objects (id, museum, image_id, etc.)
 
 
   // ----- Loading States -----
@@ -75,7 +74,7 @@ const App = () => {
   // Load saved experiences on mount
   useEffect(() => {
     const stored = localStorage.getItem("muse_ai_saved");
-    if (stored) {
+    if (stored !== null) {
       setSavedExperiences(JSON.parse(stored));
     }
   }, []);
