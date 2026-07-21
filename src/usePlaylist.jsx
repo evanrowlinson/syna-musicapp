@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 
-const SYSTEM_PROMPT = `You are a music and art curation backend engine. Take a user's mood, preferred artists, genre preferences, energy level, and current activity, and generate a cohesive experience.
+const SYSTEM_PROMPT = `You are a music and art curation backend engine. Take a user's mood, anchor artists, preferred genres, energy level, occasion, and discovery preference (how familiar vs. adventurous the picks should be), and generate a cohesive experience.
 You must respond ONLY with a single JSON object matching this exact schema:
 {
   "playlist": [
@@ -19,7 +19,8 @@ You must respond ONLY with a single JSON object matching this exact schema:
       "emotionalContext": "Why this style matches the vibe."
     }
   ]
-}`;
+}
+Use energy level to influence track tempo/intensity. Use occasion as context for what kind of listening experience this is. Use discovery to decide how well-known vs. obscure the track picks should be — low discovery means stick to familiar/popular songs, high discovery means include more obscure or lesser-known picks.`;
 
 const MOCK_AI_RESPONSE = {
   playlist: [
@@ -38,12 +39,11 @@ const MOCK_AI_RESPONSE = {
   ]
 };
 
-function isValidInput(inputs) {
+function isValidInput(inputs) {wq
   if (!inputs || typeof inputs !== 'object') return false;
   const hasMood = typeof inputs.mood === 'string' && inputs.mood.trim().length > 0;
-  const hasGenre = !inputs.genre || (typeof inputs.genre === 'string' && inputs.genre.trim().length > 0);
   const hasArtists = Array.isArray(inputs.artists) && inputs.artists.length > 0;
-  return hasMood && hasGenre && hasArtists;
+  return hasMood && hasArtists;
 }
 
 export function usePlaylist(userInputs, options = { useMock: true }) {
@@ -55,7 +55,7 @@ export function usePlaylist(userInputs, options = { useMock: true }) {
     if (!userInputs) return;
 
     if (!isValidInput(userInputs)) {
-      setError('Please provide a mood, genre, and at least one artist before generating a playlist.');
+      setError('Please provide a mood and at least one artist before generating a playlist.');
       setData(null);
       return;
     }
