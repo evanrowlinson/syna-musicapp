@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import PlaylistDisplay from "src/PlaylistDisplay.jsx";
+import PlaylistDisplay from "../PlaylistDisplay";
 import CoverArt from "./CoverArt";
 import ArtSlideshow from "./ArtSlideshow";
 import { useGenArt } from "../hooks/useArtGen";
