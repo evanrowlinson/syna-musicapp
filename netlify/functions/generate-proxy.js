@@ -46,14 +46,13 @@ exports.handler = async (event) => {
             ],
             response_format: { type: "json_object" },
         });
-        
+
         const {playlist, artPrompt, museumIds} = JSON.parse(gptResponse.choices[0].message.content);
         const dalleResponse = await client.images.generate({
             model: "dall-e-3",
             prompt: artPrompt,
             n: 1,
             size: "1024x1024",
-            n: 1,
         });
         const coverArt= dalleResponse.data[0].url;
 

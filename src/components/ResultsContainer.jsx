@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useGenArt } from '../hooks/useArtGen';
+import { useArtGen } from '../hooks/useArtGen'
 import { CoverArt } from './CoverArt';
 
 export const ResultsContainer = ({
@@ -18,7 +18,7 @@ export const ResultsContainer = ({
     loading: artLoading,
     error: artError,
     generateArt
-  } = useGenArt();
+  } = useArtGen();
 
   // ----- SYNA Loading -----
   if (loading?.gpt || loading?.dalle || loading?.museum) {
@@ -46,7 +46,7 @@ export const ResultsContainer = ({
           <h2>Your SYNA Playlist</h2>
           <ul>
             {playlist.map((track, idx) => (
-              <li key={idx}>
+              <li key={track.id}>
                 {track.title ? (
                   <>
                     <strong>{track.title}</strong> — {track.artist}
@@ -63,7 +63,7 @@ export const ResultsContainer = ({
       {/*       SYNA Cover Art      */}
       {dallePrompt && (
         <section>
-          <h2>SYNA Cover Art</h2>
+          <h2>Your Cover Art</h2>
           <img
             src={dallePrompt}
             alt="Generated cover art"
@@ -78,7 +78,7 @@ export const ResultsContainer = ({
           <h2>SYNA Museum Art</h2>
           <div className="museum-grid">
             {artworkArray.map((art, idx) => (
-              <figure key={idx}>
+              <figure key={art.id}>
                 <img
                   src={art.primaryImageSmall}
                   alt={art.title}
