@@ -3,6 +3,8 @@ import Header from "./components/Header";
 import {ResultsContainer} from "./components/ResultsContainer"; 
 import './App.css';
 import SYNAForm from './components/SYNAForm';
+import useMuseumArt from "./hooks/useMuseumArt";
+
 
 const App = () => {
   // ----- Mood Inputs -----
@@ -78,6 +80,16 @@ const App = () => {
       setSavedExperiences(JSON.parse(stored));
     }
   }, []);
+
+  
+const {
+  artworkArray,
+  loadingMuseum,
+  errorMuseum,
+  fetchMuseumArt
+} = useMuseumArt();
+
+  
 
   // Reset current session (not saved experiences)
   const resetSession = () => {
