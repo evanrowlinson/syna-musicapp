@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
-import SynaForm from "./components/SynaForm";
+import SynaForm from "./components/SYNAForm.jsx";
 import ResultsContainer from "./components/ResultsContainer";
 import { usePlaylist } from "./hooks/usePlaylist";
 import useMuseumArt from "./hooks/useMuseumArt";
