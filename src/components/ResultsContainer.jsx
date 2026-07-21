@@ -45,7 +45,7 @@ const ResultsContainer = ({
       {playlist && playlist.length > 0 && (
         <section>
           <h2>Your SYNA Playlist</h2>
-          <PlaylistDisplay playlist={playlist} />
+          <PlaylistDisplay data={{ playlist, dallePrompt, museumArtQueries }} />
         </section>
       )}
 
