@@ -1,5 +1,6 @@
 import {useState} from 'react';
 
+
 export const useArtGen = () => {
     const [imageURL, setImageURL] = useState(null);
     const [loading, setLoading] = useState(false);
