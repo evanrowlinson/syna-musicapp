@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import Header from "./components/Header";
-import MoodForm from "./components/MoodForm";
+import SynaForm from "./components/SynaForm";
 import ResultsContainer from "./components/ResultsContainer";
-import { usePlaylist } from "./usePlaylist";
+import { usePlaylist } from "./hooks/usePlaylist";
 import useMuseumArt from "./hooks/useMuseumArt";
 
 const App = () => {
-  // ----- Mood Inputs -----
   const [userInputs, setUserInputs] = useState({
     mood: "",
     artists: [],
@@ -16,10 +15,8 @@ const App = () => {
     discovery: 50
   });
 
-  // ----- GPT Hook -----
   const { data, loading, error } = usePlaylist(userInputs);
 
-  // ----- Museum API Hook -----
   const {
     artworkArray,
     loadingMuseum,
@@ -27,12 +24,11 @@ const App = () => {
     fetchMuseumArt
   } = useMuseumArt();
 
-  // ----- Global State -----
   const [playlist, setPlaylist] = useState([]);
   const [dallePrompt, setDallePrompt] = useState("");
+  const [coverImageURL, setCoverImageURL] = useState("");
   const [museumArtQueries, setMuseumArtQueries] = useState([]);
 
-  // Sync GPT output into global state
   useEffect(() => {
     if (!data) return;
 
@@ -41,7 +37,27 @@ const App = () => {
     setMuseumArtQueries(data.museumArtQueries);
   }, [data]);
 
-  // Phase 2: Trigger museum API when GPT returns artworks
+  useEffect(() => {
+    if (!dallePrompt) return;
+
+    const generateCoverArt = async () => {
+      try {
+        const response = await fetch("/.netlify/functions/image-proxy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: dallePrompt })
+      });
+
+        const result = await response.json();
+        setCoverImageURL(result.imageURL);
+      } catch (err) {
+        console.error("Cover art generation failed:", err);
+      }
+    };
+
+    generateCoverArt();
+  }, [dallePrompt]);
+
   useEffect(() => {
     if (!data) return;
     if (data.museumArtQueries && data.museumArtQueries.length > 0) {
@@ -49,19 +65,18 @@ const App = () => {
     }
   }, [data, fetchMuseumArt]);
 
-  // Reset session
   const resetSession = () => {
     setPlaylist([]);
     setDallePrompt("");
+    setCoverImageURL("");
     setMuseumArtQueries([]);
-    // museum API state resets automatically inside the hook
   };
 
   return (
     <div>
       <Header resetSession={resetSession} />
 
-      <MoodForm 
+      <SynaForm
         userInputs={userInputs}
         setUserInputs={setUserInputs}
       />
@@ -70,7 +85,7 @@ const App = () => {
         loading={loading}
         error={error}
         playlist={playlist}
-        dallePrompt={dallePrompt}
+        coverImageURL={coverImageURL}
         museumArtQueries={museumArtQueries}
         artworkArray={artworkArray}
         loadingMuseum={loadingMuseum}
