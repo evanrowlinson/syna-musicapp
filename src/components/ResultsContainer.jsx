@@ -1,5 +1,5 @@
 import React from "react";
-import PlaylistDisplay from "./PlaylistDisplay";
+import PlaylistDisplay from "src/PlaylistDisplay.jsx";
 import CoverArt from "./CoverArt";
 import ArtSlideshow from "./ArtSlideshow";
 

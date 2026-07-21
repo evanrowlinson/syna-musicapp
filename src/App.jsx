@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import SynaForm from "./components/SYNAForm.jsx";
 import ResultsContainer from "./components/ResultsContainer";
-import { usePlaylist } from "./hooks/usePlaylist";
+import { usePlaylist } from "src/usePlaylist.jsx";
 import useMuseumArt from "./hooks/useMuseumArt";
 
 const App = () => {
@@ -77,9 +77,10 @@ const App = () => {
       <Header resetSession={resetSession} />
 
       <SynaForm
-        userInputs={userInputs}
-        setUserInputs={setUserInputs}
+          onSubmit={setUserInputs}
+          isLoading={loading}
       />
+
 
       <ResultsContainer
         loading={loading}
