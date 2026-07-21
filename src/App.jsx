@@ -6,7 +6,7 @@ import { usePlaylist } from "./hooks/usePlaylist";
 import useMuseumArt from "./hooks/useMuseumArt";
 
 const App = () => {
-  // ----- Mood Inputs (Ben's expected shape) -----
+  // ----- Mood Inputs -----
   const [userInputs, setUserInputs] = useState({
     mood: "",
     artists: [],
