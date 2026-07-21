@@ -39,7 +39,7 @@ const MOCK_AI_RESPONSE = {
   ]
 };
 
-function isValidInput(inputs) {wq
+function isValidInput(inputs) {
   if (!inputs || typeof inputs !== 'object') return false;
   const hasMood = typeof inputs.mood === 'string' && inputs.mood.trim().length > 0;
   const hasArtists = Array.isArray(inputs.artists) && inputs.artists.length > 0;
