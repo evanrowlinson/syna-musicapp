@@ -155,16 +155,16 @@ body{
   transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
-.genre-chip[dara-color="pink"]{
+.genre-chip[data-color="pink"]{
   border-color: var(--accent-pink);
 }
-.genre-chip[dara-color="purple"]{
+.genre-chip[data-color="purple"]{
   border-color: var(--accent-purple);
 }
-.genre-chip[dara-color="yellow"]{
+.genre-chip[data-color="yellow"]{
   border-color: var(--accent-yellow);
 }
-.genre-chip[dara-color="blue"]{
+.genre-chip[data-color="blue"]{
   border-color: var(--accent-blue);
 }
 /* Results (from ResultsContainer)*/

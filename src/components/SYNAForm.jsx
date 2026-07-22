@@ -55,11 +55,12 @@ const SYNAForm = ({ onSubmit, isLoading }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="syna-form" onSubmit={handleSubmit}>
       <div>
         <label htmlFor="mood">Describe your mood or vibe</label>
         <input
           id="mood"
+          className="syna-input"
           type="text"
           value={mood}
           onChange={(e) => setMood(e.target.value)}
@@ -73,6 +74,7 @@ const SYNAForm = ({ onSubmit, isLoading }) => {
         <input
           id="artistInput"
           type="text"
+          className="syna-input"
           value={artistInput}
           onChange={(e) => setArtistInput(e.target.value)}
           placeholder="e.g. Frank Ocean"
@@ -86,6 +88,7 @@ const SYNAForm = ({ onSubmit, isLoading }) => {
         />
         <button
           type="button"
+          className="syna-btn"
           onClick={handleAddArtist}
           disabled={isLoading || artists.length >= 3 || artistInput.trim() === ''}
         >
@@ -120,6 +123,7 @@ const SYNAForm = ({ onSubmit, isLoading }) => {
               <button
                 key={genre}
                 type="button"
+                className="genre-chip"
                 onClick={() => handleToggleGenre(genre)}
                 disabled={isLoading || (!selected && genres.length >= MAX_GENRES)}
                 aria-pressed={selected}
@@ -146,6 +150,7 @@ const SYNAForm = ({ onSubmit, isLoading }) => {
             <button
               key={level}
               type="button"
+              className="genre-chip"
               onClick={() => setEnergy(level)}
               disabled={isLoading}
               aria-pressed={energy === level}
@@ -167,6 +172,7 @@ const SYNAForm = ({ onSubmit, isLoading }) => {
         <label htmlFor="occasion">Occasion</label>
         <select
           id="occasion"
+          className="syna-input"
           value={occasion}
           onChange={(e) => setOccasion(e.target.value)}
           disabled={isLoading}
@@ -195,6 +201,7 @@ const SYNAForm = ({ onSubmit, isLoading }) => {
 
       <button
         type="submit"
+        className="syna-btn"
         disabled={isLoading || mood.trim() === ''}
       >
         {isLoading ? 'Generating your experience...' : 'Generate My Experience'}
