@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Header from "./components/Header";
 import SynaForm from "./components/SYNAForm.jsx";
 import ResultsContainer from "./components/ResultsContainer";
-import { usePlaylist } from "src/usePlaylist.jsx";
+import { usePlaylist } from "./hooks/usePlaylist";
 import useMuseumArt from "./hooks/useMuseumArt";
 import { useSavedExperiences } from "./useSavedExperiences";
 
