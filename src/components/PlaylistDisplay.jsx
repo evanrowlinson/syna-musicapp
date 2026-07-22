@@ -15,7 +15,7 @@ export default function PlaylistDisplay({ data, loading, error, saveExperience, 
 
   if (loading) {
     return (
-      <div className="loading-container" style={{ padding: '20px', textAlign: 'center' }}>
+      <div className="playlist-panel">
         <p>⌛ Curating your personalized music and art experience...</p>
       </div>
     );
@@ -23,7 +23,7 @@ export default function PlaylistDisplay({ data, loading, error, saveExperience, 
 
   if (error) {
     return (
-      <div className="error-container" style={{ padding: '20px', color: 'red' }}>
+      <div className="art-error-container">
         <p>❌ Error loading your playlist: {error}</p>
       </div>
     );
@@ -31,17 +31,18 @@ export default function PlaylistDisplay({ data, loading, error, saveExperience, 
 
   if (!data) {
     return (
-      <div style={{ padding: '20px', textAlign: 'center', color: '#666' }}>
+      <div className="playlist-panel">
         <p>Please submit the form to generate your custom experience.</p>
       </div>
     );
   }
 
   return (
-    <div className="playlist-display-container" style={{ padding: '20px', maxWidth: '800px', margin: '0 auto' }}>
+    <div className="playlist-panel">
       
       <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '20px' }}>
         <button
+          className="syna-btn"
           onClick={handleSaveExperience}
           style={{
             padding: '10px 20px',
@@ -58,14 +59,14 @@ export default function PlaylistDisplay({ data, loading, error, saveExperience, 
         </button>
       </div>
       
-      <section className="cover-art-section" style={{ marginBottom: '40px', background: '#f9f9f9', padding: '20px', borderRadius: '8px' }}>
+      <section className="syna-panel" style={{ marginBottom: '24px' }}>
         <h2>🎨 AI Cover Art Concept</h2>
-        <p style={{ fontStyle: 'italic', color: '#444', lineHeight: '1.6' }}>
+        <p style={{ fontStyle: 'italic', color: 'var(--text-muted)', lineHeight: '1.6' }}>
           "{data.dallePrompt}"
         </p>
       </section>
 
-      <section className="tracks-section" style={{ marginBottom: '40px' }}>
+      <section style={{ marginBottom: '24px' }}>
         <h2>🎵 Your Mood-Driven Playlist</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
           {data.playlist.map((track) => (
@@ -77,18 +78,17 @@ export default function PlaylistDisplay({ data, loading, error, saveExperience, 
         </div>
       </section>
 
-      <section className="museum-section" style={{ background: '#f5f7fa', padding: '20px', borderRadius: '8px' }}>
+      <section className="museum-panel" style={{ background: '#f5f7fa', padding: '20px', borderRadius: '8px' }}>
         <h2>🏛️ Classical Museum Pairings</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '15px' }}>
           {data.museumArtQueries.map((query) => (
             <div 
-              key={query.id} 
-              style={{ background: '#fff', padding: '15px', borderRadius: '6px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
-            >
-              <h4 style={{ margin: '0 0 8px 0', color: '#0070f3' }}>
+              key={query.id}
+              className="syna-panel">
+              <h4 style={{ margin: '0 0 8px 0', color: 'var(--accent-blue)' }}>
                 {query.museum?.toUpperCase()} — Object {query.objectId}
               </h4>
-              <p style={{ margin: '0', color: '#444', fontSize: '0.95em' }}>
+              <p style={{ margin: '0', color: 'var(--text-muted)', fontSize: '0.95em' }}>
                 <strong>Emotional Contrast:</strong> {query.emotionalContext}
               </p>
             </div>

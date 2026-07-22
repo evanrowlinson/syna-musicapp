@@ -22,7 +22,7 @@ const ResultsContainer = ({
 
   if (error !== null || errorMuseum !== null) {
     return (
-      <div className="error-banner">
+      <div className="art-error-banner">
         {error && <p>Error generating playlist: {error}</p>}
         {errorMuseum && <p>Error fetching museum art: {errorMuseum}</p>}
       </div>
@@ -30,7 +30,7 @@ const ResultsContainer = ({
   }
 
   return (
-    <div className="results-container-module">
+    <div className="results-container">
 
       {playlist.length > 0 && (
         <section>
