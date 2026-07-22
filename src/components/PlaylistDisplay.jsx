@@ -78,8 +78,8 @@ export default function PlaylistDisplay({ data, loading, error, saveExperience, 
         </div>
       </section>
 
-      <section className="museum-panel" style={{ background: '#f5f7fa', padding: '20px', borderRadius: '8px' }}>
-        <h2>🏛️ Classical Museum Pairings</h2>
+      <section className="museum-panel">
+        <h2 style={{ color: 'var(--accent-blue)' }}>🏛️ Classical Museum Pairings</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '15px' }}>
           {data.museumArtQueries.map((query) => (
             <div 
