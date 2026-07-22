@@ -1,17 +1,28 @@
 import React from "react";
 
 const ArtSlide = ({ art }) => {
-  return (
-    <div className="art-slide">
-      {/* Placeholder — real UI comes in Phase 2 */}
-      <img src={art.imageUrl} alt={art.title} />
+  if (!art) return null;
 
-      <h3>{art.title}</h3>
-      <p>{art.artist}</p>
-      <p>{art.period}</p>
-      <p>{art.museum}</p>
-      <p>{art.justification}</p>
-    </div>
+  const image =
+    art.primaryImageSmall ||
+    art.image_url ||
+    art.imageUrl ||
+    "";
+
+  return (
+    <figure>
+      {image && (
+        <img
+          src={image}
+          alt={art.title}
+          style={{ width: "250px", borderRadius: "8px" }}
+        />
+      )}
+      <figcaption>
+        <div>{art.title}</div>
+        <div>{art.artistDisplayName || art.artist_title}</div>
+      </figcaption>
+    </figure>
   );
 };
 

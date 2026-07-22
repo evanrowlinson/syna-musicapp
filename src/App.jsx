@@ -1,96 +1,79 @@
 import { useState, useEffect } from "react";
-import Header from "./components/Header"; 
-import {ResultsContainer} from "./components/ResultsContainer"; 
-import './App.css';
-import SYNAForm from './components/SYNAForm';
+import Header from "./components/Header";
+import SynaForm from "./components/SYNAForm.jsx";
+import ResultsContainer from "./components/ResultsContainer";
+import { usePlaylist } from "./hooks/usePlaylist";
+import useMuseumArt from "./hooks/useMuseumArt";
+import { useSavedExperiences } from "./useSavedExperiences";
 
 const App = () => {
-  // ----- Mood Inputs -----
-  const [moodInputs, setMoodInputs] = useState({
-    moodText: "",
+  const [userInputs, setUserInputs] = useState({
+    mood: "",
     artists: [],
     genres: [],
     energy: "",
     occasion: "",
-    discovery: 50,
+    discovery: 50
   });
+  
+  const { experiences, saveExperience, deleteExperience } = useSavedExperiences();
 
-  // ----- GPT Output-----
+
+  const { data, loading, error } = usePlaylist(userInputs);
+
+  const {
+    artworkArray,
+    loadingMuseum,
+    errorMuseum,
+    fetchMuseumArt
+  } = useMuseumArt();
+
   const [playlist, setPlaylist] = useState([]);
-  const [dallePrompt, setDallePrompt] = useState(""); 
-  const [museumArtQueries, setMuseumArtQueries] = useState([]); 
+  const [dallePrompt, setDallePrompt] = useState("");
+  const [coverImageURL, setCoverImageURL] = useState("");
+  const [museumArtQueries, setMuseumArtQueries] = useState([]);
 
-  // ----- Phase 2: Final museum artwork objects -----
-  const [artworkArray, setArtworkArray] = useState([]); 
-
-
-  // ----- Loading States -----
-  const [loading, setLoading] = useState({
-    gpt: false,
-    dalle: false,
-    museum: false,
-  });
-
-  // ----- Error States -----
-  const [errors, setErrors] = useState({
-    gpt: null,
-    dalle: null,
-    museum: null,
-  });
-
-  // -----Front-end connection to generate-proxy.js (serverless funtion) -----
-  const handleSubmit = async (formData) => {
-  // ------ Update moodInputs with SYNAForm data ------
-  setMoodInputs(formData);
-
-  setLoading({ gpt: true, dalle: true, museum: true });
-  setErrors({ gpt: null, dalle: null, museum: null });
-
-  try {
-    const gptResponse = await fetch("/.netlify/functions/generate-proxy", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ moodInputs: formData }),
-    });
-
-    const data = await gptResponse.json();
-
-    setPlaylist(data.playlist || []);
-    setDallePrompt(data.coverArt || "");
-    setMuseumArtQueries(data.museumArt || []);
-    setArtworkArray(data.museumArt || []);
-
-    setLoading({ gpt: false, dalle: false, museum: false });
-  } catch (err) {
-    console.error("Pipeline error:", err);
-    setErrors({
-      gpt: "GPT failed",
-      dalle: "DALL-E failed",
-      museum: "Museum API failed",
-    });
-    setLoading({ gpt: false, dalle: false, museum: false });
-  }
-};
-
-  // ----- Saved Experiences -----
-  const [savedExperiences, setSavedExperiences] = useState([]);
-
-  // Load saved experiences on mount
   useEffect(() => {
-    const stored = localStorage.getItem("muse_ai_saved");
-    if (stored !== null) {
-      setSavedExperiences(JSON.parse(stored));
-    }
-  }, []);
+    if (!data) return;
 
-  // Reset current session (not saved experiences)
+    setPlaylist(data.playlist);
+    setDallePrompt(data.dallePrompt);
+    setMuseumArtQueries(data.museumArtQueries);
+  }, [data]);
+
+  useEffect(() => {
+    if (!dallePrompt) return;
+
+    const generateCoverArt = async () => {
+      try {
+        const response = await fetch("/.netlify/functions/image-proxy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt: dallePrompt })
+      });
+
+        const result = await response.json();
+        setCoverImageURL(result.data?.[0]?.url ?? "");
+      } catch (err) {
+        console.error("Cover art generation failed:", err);
+      }
+    };
+
+    generateCoverArt();
+  }, [dallePrompt]);
+
+  useEffect(() => {
+    if (!data) return;
+    if (data.museumArtQueries && data.museumArtQueries.length > 0) {
+      fetchMuseumArt(data.museumArtQueries);
+    }
+  }, [data, fetchMuseumArt]);
+
   const resetSession = () => {
     setPlaylist([]);
     setDallePrompt("");
+    setCoverImageURL("");
     setMuseumArtQueries([]);
-    setArtworkArray([]);
-    setLoading({ gpt: false, dalle: false, museum: false });
-    setErrors({ gpt: null, dalle: null, museum: null });
   };
 
   return (
@@ -105,13 +88,15 @@ const App = () => {
 
       <ResultsContainer
         loading={loading}
-        errors={errors}
+        error={error}
         playlist={playlist}
-        dallePrompt={dallePrompt}
+        coverImageURL={coverImageURL}
         museumArtQueries={museumArtQueries}
         artworkArray={artworkArray}
+        loadingMuseum={loadingMuseum}
+        errorMuseum={errorMuseum}
+        saveExperience={saveExperience} 
       />
-
     </div>
   );
 };
