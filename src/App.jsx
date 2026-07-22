@@ -78,12 +78,12 @@ const App = () => {
   };
 
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      <aside style={{ borderRight: "1px solid #eee" }}>
+    <div className="app-layout">
+      <aside className = "sidebar">
         <SavedExperiences experiences={experiences} onDelete={deleteExperience} />
       </aside>
 
-      <main style={{ flex: 1 }}>
+      <main className="main-content">
         <Header resetSession={resetSession} />
 
         <SynaForm
