@@ -30,6 +30,7 @@ const useMuseumArt = () => {
           const data = await res.json();
           if (data.data?.image_id) {
             results.push(data.data);
+          }
         }
       }
 
