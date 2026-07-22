@@ -44,7 +44,7 @@ const SavedExperiences = ({ experiences, onDelete, onSelect }) => {
                   <li
                     key={track.id}
                     className="saved-experience-track"
-                    style={{ fontSize: '0.8em', color: '#444', padding: '1px 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
+                    style={{ fontSize: '0.8em', padding: '1px 0', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}
                     title={`${track.title} — ${track.artist}`}
                   >
                     {track.title} <span style={{ color: "var(--text-muted)" }}>— {track.artist}</span>
