@@ -61,7 +61,7 @@ export default function PlaylistDisplay({ data, loading, error, saveExperience, 
       
       <section className="syna-panel" style={{ marginBottom: '24px' }}>
         <h2>🎨 AI Cover Art Concept</h2>
-        <p style={{ fontStyle: 'italic', color: 'var(--text-muted)', lineHeight: '1.6' }}>
+        <p style={{ fontStyle: 'italic', color: "var(--text-muted)", lineHeight: '1.6' }}>
           "{data.dallePrompt}"
         </p>
       </section>
@@ -79,16 +79,16 @@ export default function PlaylistDisplay({ data, loading, error, saveExperience, 
       </section>
 
       <section className="museum-panel">
-        <h2 style={{ color: 'var(--accent-blue)' }}>🏛️ Classical Museum Pairings</h2>
+        <h2 style={{ color: "var(--accent-blue)"}}>🏛️ Classical Museum Pairings</h2>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginTop: '15px' }}>
           {data.museumArtQueries.map((query) => (
             <div 
               key={query.id}
               className="syna-panel">
-              <h4 style={{ margin: '0 0 8px 0', color: 'var(--accent-blue)' }}>
+              <h4 style={{ margin: '0 0 8px 0', color: "var(--accent-blue)" }}>
                 {query.museum?.toUpperCase()} — Object {query.objectId}
               </h4>
-              <p style={{ margin: '0', color: 'var(--text-muted)', fontSize: '0.95em' }}>
+              <p style={{ margin: '0', color: "var(--text-muted)", fontSize: '0.95em' }}>
                 <strong>Emotional Contrast:</strong> {query.emotionalContext}
               </p>
             </div>
