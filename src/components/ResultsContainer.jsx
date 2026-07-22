@@ -7,6 +7,7 @@ const ResultsContainer = ({
   loading,
   error,
   playlist,
+  dallePrompt,
   coverImageURL,
   museumArtQueries,
   artworkArray,
