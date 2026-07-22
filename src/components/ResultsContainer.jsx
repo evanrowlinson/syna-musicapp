@@ -37,6 +37,8 @@ const ResultsContainer = ({
             data={{ playlist, dallePrompt: null, museumArtQueries }}
             loading={loading}
             error={error}
+            coverImageURL={coverImageURL}
+            saveExperience={saveExperience}   
           />
         </section>
       )}
