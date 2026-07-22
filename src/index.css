@@ -330,7 +330,7 @@ body{
 .art-error-banner{
   background: var(--error-bg);
   border: 1px solid var(--error);
-  color: var(--error);
+  color: var(--error);1
   border-radius: 8px;
   padding: 14px;
   color: #ea3838;
