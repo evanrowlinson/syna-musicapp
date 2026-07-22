@@ -11,7 +11,8 @@ const ResultsContainer = ({
   museumArtQueries,
   artworkArray,
   loadingMuseum,
-  errorMuseum
+  errorMuseum,
+  saveExperience,
 }) => {
   if (loading === true || loadingMuseum === true) {
     return <p>Generating your SYNA experience…</p>;
