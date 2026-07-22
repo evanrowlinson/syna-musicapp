@@ -1,12 +1,12 @@
 import React from 'react';
 import PlaylistCard from './PlaylistCard';
 
-export default function PlaylistDisplay({ data, loading, error, saveExperience }) {
+export default function PlaylistDisplay({ data, loading, error, saveExperience, userInputs }) {
 
   const handleSaveExperience = () => {
     if (!data) return;
     try {
-      saveExperience(data);
+      saveExperience({ inputs: userInputs, ...data });
       alert('🔒 Complete mood experience successfully saved!');
     } catch (err) {
       alert('⚠️ Could not save your experience. Please try again.');
