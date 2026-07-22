@@ -39,8 +39,8 @@ export function usePlaylist(userInputs) {
     if (!userInputs) return;
 
     if (!isValidInput(userInputs)) {
-      setError("Please provide a mood and at least one artist before generating a playlist.");
       setData(null);
+      setError(null);  // silent return for empty/initial state
       return;
     }
 
