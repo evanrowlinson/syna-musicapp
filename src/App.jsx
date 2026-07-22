@@ -4,6 +4,7 @@ import SynaForm from "./components/SYNAForm.jsx";
 import ResultsContainer from "./components/ResultsContainer";
 import { usePlaylist } from "src/usePlaylist.jsx";
 import useMuseumArt from "./hooks/useMuseumArt";
+import { useSavedExperiences } from "./useSavedExperiences";
 
 const App = () => {
   const [userInputs, setUserInputs] = useState({
@@ -14,6 +15,9 @@ const App = () => {
     occasion: "",
     discovery: 50
   });
+  
+  const { experiences, saveExperience, deleteExperience } = useSavedExperiences();
+
 
   const { data, loading, error } = usePlaylist(userInputs);
 
