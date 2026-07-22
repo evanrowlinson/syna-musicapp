@@ -27,15 +27,12 @@ const App = () => {
     loadingMuseum,
     errorMuseum,
     fetchMuseumArt,
-    resetMuseumArt
   } = useMuseumArt();
 
   const [playlist, setPlaylist] = useState([]);
   const [dallePrompt, setDallePrompt] = useState("");
   const [coverImageURL, setCoverImageURL] = useState("");
   const [museumArtQueries, setMuseumArtQueries] = useState([]);
-  const [resetFormFlag, setResetFormFlag] = useState(false);
-
 
   useEffect(() => {
     if (!data) return;
@@ -94,7 +91,6 @@ const App = () => {
         <SynaForm
           onSubmit={setUserInputs}
           isLoading={loading}
-          resetFlag={resetFormFlag}
         />
 
 

@@ -12,7 +12,7 @@ const OCCASION_OPTIONS = [
 
 const MAX_GENRES = 3;
 
-const SYNAForm = ({ onSubmit, isLoading, resetFlag }) => {
+const SYNAForm = ({ onSubmit, isLoading }) => {
   const [mood, setMood] = useState('');
   const [artistInput, setArtistInput] = useState('');
   const [artists, setArtists] = useState([]);
@@ -21,15 +21,7 @@ const SYNAForm = ({ onSubmit, isLoading, resetFlag }) => {
   const [occasion, setOccasion] = useState('');
   const [discovery, setDiscovery] = useState(50);
 
-   useEffect(() => {
-    setMood('');
-    setArtistInput('');
-    setArtists([]);
-    setGenres([]);
-    setEnergy('Medium');
-    setOccasion('');
-    setDiscovery(50);
-  }, [resetFlag]);
+   
 
   const handleAddArtist = () => {
     const trimmed = artistInput.trim();
