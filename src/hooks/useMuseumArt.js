@@ -42,7 +42,13 @@ const useMuseumArt = () => {
     }
   };
 
-  return { artworkArray, loadingMuseum, errorMuseum, fetchMuseumArt };
+  const resetMuseumArt = () => {
+  setArtworkArray([]);
+  setErrorMuseum(null);
+  setLoadingMuseum(false);
+};
+
+  return { artworkArray, loadingMuseum, errorMuseum, fetchMuseumArt, resetMuseumArt };
 };
 
 export default useMuseumArt;
