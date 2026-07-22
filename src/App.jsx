@@ -16,7 +16,7 @@ const App = () => {
     occasion: "",
     discovery: 50
   });
-  
+
   const { experiences, saveExperience, deleteExperience } = useSavedExperiences();
 
 
@@ -87,8 +87,8 @@ const App = () => {
         <Header resetSession={resetSession} />
 
         <SynaForm
-          onSubmit={handleSubmit}
-          isLoading={loading.gpt || loading.dalle || loading.museum}
+          onSubmit={setUserInputs}
+          isLoading={loading}
         />
 
 
@@ -96,6 +96,7 @@ const App = () => {
           loading={loading}
           error={error}
           playlist={playlist}
+          dallePrompt={dallePrompt}
           coverImageURL={coverImageURL}
           museumArtQueries={museumArtQueries}
           artworkArray={artworkArray}
