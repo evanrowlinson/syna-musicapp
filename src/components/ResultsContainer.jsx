@@ -35,7 +35,7 @@ const ResultsContainer = ({
         <section>
           <h2>Your SYNA Playlist</h2>
           <PlaylistDisplay
-            data={{ playlist, dallePrompt: null, museumArtQueries }}
+            data={{ playlist, dallePrompt, museumArtQueries }}
             loading={loading}
             error={error}
             coverImageURL={coverImageURL}
