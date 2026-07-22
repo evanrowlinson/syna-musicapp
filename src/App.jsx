@@ -95,6 +95,7 @@ const App = () => {
         artworkArray={artworkArray}
         loadingMuseum={loadingMuseum}
         errorMuseum={errorMuseum}
+        saveExperience={saveExperience} 
       />
     </div>
   );
