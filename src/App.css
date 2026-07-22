@@ -184,7 +184,6 @@
 }
 
 /* Art Generation Module CSS */
-
 .results-container-module {
   background: rgba(255, 255, 255, 0.02);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -197,7 +196,7 @@
   text-align: center;
 }
 
-.result-container-module h2 {
+.results-container-module h2 {
   color: #ffffff;
   font-size: 1.8rem;
   margin-bottom: 20px;
