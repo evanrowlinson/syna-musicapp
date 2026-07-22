@@ -26,7 +26,8 @@ const App = () => {
     artworkArray,
     loadingMuseum,
     errorMuseum,
-    fetchMuseumArt
+    fetchMuseumArt,
+    resetMuseumArt
   } = useMuseumArt();
 
   const [playlist, setPlaylist] = useState([]);
@@ -75,6 +76,7 @@ const App = () => {
     setDallePrompt("");
     setCoverImageURL("");
     setMuseumArtQueries([]);
+    resetMuseumArt(); 
   };
 
   return (
