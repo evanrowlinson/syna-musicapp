@@ -19,14 +19,17 @@ const useMuseumArt = () => {
           const url = `https://collectionapi.metmuseum.org/public/collection/v1/objects/${objectId}`;
           const res = await fetch(url);
           const data = await res.json();
-          results.push(data);
+          if (data.primaryImageSmall) {
+            results.push(data);
+          }
         }
 
         if (museum === "aic") {
           const url = `https://api.artic.edu/api/v1/artworks/${objectId}`;
           const res = await fetch(url);
           const data = await res.json();
-          results.push(data.data);
+          if (data.data?.image_id) {
+            results.push(data.data);
         }
       }
 
