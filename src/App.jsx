@@ -27,6 +27,7 @@ const App = () => {
     loadingMuseum,
     errorMuseum,
     fetchMuseumArt,
+    resetMuseumArt
   } = useMuseumArt();
 
   const [playlist, setPlaylist] = useState([]);
@@ -76,7 +77,6 @@ const App = () => {
     setCoverImageURL("");
     setMuseumArtQueries([]);
     resetMuseumArt(); 
-    setResetFormFlag(prev => !prev);
   };
 
   return (
