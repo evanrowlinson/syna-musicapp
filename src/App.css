@@ -87,58 +87,12 @@ body{
 }
 
 /* Header (from Header) */
-app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.app-header {
   background: var(--panel);
   border-bottom: 1px solid var(--border);
-  padding: var(--space);
   border-radius: var(--radius);
+  padding: var(--space);
   box-shadow: var(--shadow);
-}
-
-.header-brand {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.header-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--accent-blue);
-  letter-spacing: 1px;
-}
-
-.header-tagline {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  opacity: 0.9;
-}
-
-/* Reset Button */
-.header-reset {
-  padding: 12px 18px;
-  background: var(--accent-purple); 
-  color: #1a1b22; 
-  border: none;
-  border-radius: 10px;
-  font-size: 0.95rem;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
-  box-shadow: 0 4px 12px rgba(216, 184, 255, 0.25);
-}
-
-.header-reset:hover {
-  background: var(--accent-pink); 
-  transform: translateY(-1px);
-}
-
-.header-reset:active {
-  transform: translateY(0);
-  background: var(--accent-blue); 
 }
 
 /* Form (from SynaForm) */

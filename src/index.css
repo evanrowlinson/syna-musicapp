@@ -75,35 +75,14 @@ body{
 }
 
 /* Header (from Header) */
-app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.app-header {
   background: var(--panel);
   border-bottom: 1px solid var(--border);
-  padding: var(--space);
   border-radius: var(--radius);
+  padding: var(--space);
   box-shadow: var(--shadow);
 }
 
-.header-brand {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.header-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: var(--accent-blue);
-  letter-spacing: 1px;
-}
-
-.header-tagline {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  opacity: 0.9;
-}
 
 /* Form (from SynaForm) */
 .syna-form{

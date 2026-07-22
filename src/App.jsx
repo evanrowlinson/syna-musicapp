@@ -34,6 +34,8 @@ const App = () => {
   const [dallePrompt, setDallePrompt] = useState("");
   const [coverImageURL, setCoverImageURL] = useState("");
   const [museumArtQueries, setMuseumArtQueries] = useState([]);
+  const [resetFormFlag, setResetFormFlag] = useState(false);
+
 
   useEffect(() => {
     if (!data) return;
@@ -77,6 +79,7 @@ const App = () => {
     setCoverImageURL("");
     setMuseumArtQueries([]);
     resetMuseumArt(); 
+    setResetFormFlag(prev => !prev);
   };
 
   return (
@@ -91,6 +94,7 @@ const App = () => {
         <SynaForm
           onSubmit={setUserInputs}
           isLoading={loading}
+          resetFlag={resetFormFlag}
         />
 
 
