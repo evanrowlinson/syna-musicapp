@@ -67,7 +67,7 @@ const App = () => {
     if (data.museumArtQueries && data.museumArtQueries.length > 0) {
       fetchMuseumArt(data.museumArtQueries);
     }
-  }, [data, fetchMuseumArt]);
+  }, [data]);
 
   const resetSession = () => {
     setPlaylist([]);
