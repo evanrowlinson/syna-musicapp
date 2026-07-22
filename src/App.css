@@ -250,4 +250,15 @@ body{
   color: var(--error);
   border-radius: 8px;
   padding: 14px;
+  color: #ea3838;
+  font-size: 0.9rem;
+  margin-top: 16px;
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }

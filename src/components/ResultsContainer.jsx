@@ -1,5 +1,5 @@
 import React from "react";
-import PlaylistDisplay from "src/PlaylistDisplay.jsx";
+import PlaylistDisplay from "./PlaylistDisplay";
 import CoverArt from "./CoverArt";
 import ArtSlideshow from "./ArtSlideshow";
 
@@ -7,12 +7,14 @@ const ResultsContainer = ({
   loading,
   error,
   playlist,
+  dallePrompt,
   coverImageURL,
   museumArtQueries,
   artworkArray,
   loadingMuseum,
   errorMuseum,
   saveExperience,
+  userInputs,
 }) => {
   if (loading === true || loadingMuseum === true) {
     return <p>Generating your SYNA experience…</p>;
@@ -34,11 +36,12 @@ const ResultsContainer = ({
         <section>
           <h2>Your SYNA Playlist</h2>
           <PlaylistDisplay
-            data={{ playlist, dallePrompt: null, museumArtQueries }}
+            data={{ playlist, dallePrompt, museumArtQueries }}
             loading={loading}
             error={error}
             coverImageURL={coverImageURL}
-            saveExperience={saveExperience}   
+            saveExperience={saveExperience}
+            userInputs={userInputs}
           />
         </section>
       )}

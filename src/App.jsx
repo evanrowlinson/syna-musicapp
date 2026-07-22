@@ -5,6 +5,7 @@ import ResultsContainer from "./components/ResultsContainer";
 import { usePlaylist } from "./hooks/usePlaylist";
 import useMuseumArt from "./hooks/useMuseumArt";
 import { useSavedExperiences } from "./useSavedExperiences";
+import SavedExperiences from "./components/SavedExperiences";
 
 const App = () => {
   const [userInputs, setUserInputs] = useState({
@@ -15,7 +16,7 @@ const App = () => {
     occasion: "",
     discovery: 50
   });
-  
+
   const { experiences, saveExperience, deleteExperience } = useSavedExperiences();
 
 
@@ -67,7 +68,7 @@ const App = () => {
     if (data.museumArtQueries && data.museumArtQueries.length > 0) {
       fetchMuseumArt(data.museumArtQueries);
     }
-  }, [data, fetchMuseumArt]);
+  }, [data]);
 
   const resetSession = () => {
     setPlaylist([]);
@@ -77,26 +78,34 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Header resetSession={resetSession} />
+    <div className="app-layout">
+      <aside className = "sidebar">
+        <SavedExperiences experiences={experiences} onDelete={deleteExperience} />
+      </aside>
 
-      <SYNAForm
-        onSubmit={handleSubmit}
-        isLoading={loading.gpt || loading.dalle || loading.museum}
-      />
+      <main className="main-content">
+        <Header resetSession={resetSession} />
+
+        <SynaForm
+          onSubmit={setUserInputs}
+          isLoading={loading}
+        />
 
 
-      <ResultsContainer
-        loading={loading}
-        error={error}
-        playlist={playlist}
-        coverImageURL={coverImageURL}
-        museumArtQueries={museumArtQueries}
-        artworkArray={artworkArray}
-        loadingMuseum={loadingMuseum}
-        errorMuseum={errorMuseum}
-        saveExperience={saveExperience} 
-      />
+        <ResultsContainer
+          loading={loading}
+          error={error}
+          playlist={playlist}
+          dallePrompt={dallePrompt}
+          coverImageURL={coverImageURL}
+          museumArtQueries={museumArtQueries}
+          artworkArray={artworkArray}
+          loadingMuseum={loadingMuseum}
+          errorMuseum={errorMuseum}
+          saveExperience={saveExperience}
+          userInputs={userInputs}
+        />
+      </main>
     </div>
   );
 };
