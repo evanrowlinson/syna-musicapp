@@ -5,6 +5,7 @@ import ResultsContainer from "./components/ResultsContainer";
 import { usePlaylist } from "./hooks/usePlaylist";
 import useMuseumArt from "./hooks/useMuseumArt";
 import { useSavedExperiences } from "./useSavedExperiences";
+import SavedExperiences from "./components/SavedExperiences";
 
 const App = () => {
   const [userInputs, setUserInputs] = useState({
@@ -77,26 +78,32 @@ const App = () => {
   };
 
   return (
-    <div>
-      <Header resetSession={resetSession} />
+    <div style={{ display: "flex", minHeight: "100vh" }}>
+      <aside style={{ borderRight: "1px solid #eee" }}>
+        <SavedExperiences experiences={experiences} onDelete={deleteExperience} />
+      </aside>
 
-      <SynaForm
-        onSubmit={handleSubmit}
-        isLoading={loading.gpt || loading.dalle || loading.museum}
-      />
+      <main style={{ flex: 1 }}>
+        <Header resetSession={resetSession} />
+
+        <SynaForm
+          onSubmit={handleSubmit}
+          isLoading={loading.gpt || loading.dalle || loading.museum}
+        />
 
 
-      <ResultsContainer
-        loading={loading}
-        error={error}
-        playlist={playlist}
-        coverImageURL={coverImageURL}
-        museumArtQueries={museumArtQueries}
-        artworkArray={artworkArray}
-        loadingMuseum={loadingMuseum}
-        errorMuseum={errorMuseum}
-        saveExperience={saveExperience} 
-      />
+        <ResultsContainer
+          loading={loading}
+          error={error}
+          playlist={playlist}
+          coverImageURL={coverImageURL}
+          museumArtQueries={museumArtQueries}
+          artworkArray={artworkArray}
+          loadingMuseum={loadingMuseum}
+          errorMuseum={errorMuseum}
+          saveExperience={saveExperience}
+        />
+      </main>
     </div>
   );
 };
