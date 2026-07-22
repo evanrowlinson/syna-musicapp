@@ -90,6 +90,7 @@ const App = () => {
         loading={loading}
         error={error}
         playlist={playlist}
+        dallePrompt={dallePrompt}
         coverImageURL={coverImageURL}
         museumArtQueries={museumArtQueries}
         artworkArray={artworkArray}
