@@ -86,7 +86,7 @@ export default function PlaylistDisplay({ data, loading, error, saveExperience }
               style={{ background: '#fff', padding: '15px', borderRadius: '6px', boxShadow: '0 1px 3px rgba(0,0,0,0.05)' }}
             >
               <h4 style={{ margin: '0 0 8px 0', color: '#0070f3' }}>
-                Search Key: "{query.searchKeyword}"
+                {query.museum?.toUpperCase()} — Object {query.objectId}
               </h4>
               <p style={{ margin: '0', color: '#444', fontSize: '0.95em' }}>
                 <strong>Emotional Contrast:</strong> {query.emotionalContext}
