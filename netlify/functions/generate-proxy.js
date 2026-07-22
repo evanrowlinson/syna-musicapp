@@ -1,5 +1,4 @@
 const OpenAI = require("openai");
-const fetch = require("node-fetch");
 
 exports.handler = async (event) => {
     if (event.httpMethod !== "POST") {
@@ -46,14 +45,13 @@ exports.handler = async (event) => {
             ],
             response_format: { type: "json_object" },
         });
-        
+
         const {playlist, artPrompt, museumIds} = JSON.parse(gptResponse.choices[0].message.content);
         const dalleResponse = await client.images.generate({
             model: "dall-e-3",
             prompt: artPrompt,
             n: 1,
             size: "1024x1024",
-            n: 1,
         });
         const coverArt= dalleResponse.data[0].url;
 
@@ -62,7 +60,7 @@ exports.handler = async (event) => {
                 const museumResponse = await fetch(
                     `https://collectionapi.metmuseum.org/public/collection/v1/objects/${id}`
                 );
-                return await response.json();
+                return await museumResponse.json();
             })
         );
 

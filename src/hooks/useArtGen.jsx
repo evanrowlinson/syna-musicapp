@@ -13,7 +13,7 @@ export const useArtGen = () => {
         setError(null);
 
         try {
-            const response = await fetch('/.netlify/functions/generate-art', {
+            const response = await fetch('/.netlify/functions/image-proxy', {
                 method: 'POST',
                 headers:{ 'Content-Type': 'application/json' },
                 body: JSON.stringify({ prompt: promptText }),
