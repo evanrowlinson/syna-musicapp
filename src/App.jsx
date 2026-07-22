@@ -49,7 +49,7 @@ const App = () => {
       });
 
         const result = await response.json();
-        setCoverImageURL(result.imageURL);
+        setCoverImageURL(result.data?.[0]?.url ?? "");
       } catch (err) {
         console.error("Cover art generation failed:", err);
       }
