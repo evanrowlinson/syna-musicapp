@@ -14,6 +14,7 @@ const ResultsContainer = ({
   loadingMuseum,
   errorMuseum,
   saveExperience,
+  userInputs,
 }) => {
   if (loading === true || loadingMuseum === true) {
     return <p>Generating your SYNA experience…</p>;
@@ -39,7 +40,8 @@ const ResultsContainer = ({
             loading={loading}
             error={error}
             coverImageURL={coverImageURL}
-            saveExperience={saveExperience}   
+            saveExperience={saveExperience}
+            userInputs={userInputs}
           />
         </section>
       )}

@@ -103,6 +103,7 @@ const App = () => {
           loadingMuseum={loadingMuseum}
           errorMuseum={errorMuseum}
           saveExperience={saveExperience}
+          userInputs={userInputs}
         />
       </main>
     </div>
