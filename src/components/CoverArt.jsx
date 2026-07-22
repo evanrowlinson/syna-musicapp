@@ -46,3 +46,4 @@ export const CoverArt = ({ imageURL, loading, error }) => {
         </div>
     );
 }
+export default CoverArt;
