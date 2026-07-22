@@ -81,8 +81,8 @@ const App = () => {
       <Header resetSession={resetSession} />
 
       <SYNAForm
-        onSubmit={setUserInputs}
-        isLoading={loading}
+        onSubmit={handleSubmit}
+        isLoading={loading.gpt || loading.dalle || loading.museum}
       />
 
 
